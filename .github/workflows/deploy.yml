@@ -20,10 +20,10 @@ jobs:
         USER: ${{ secrets.EC2_USER }}
       run: |
         ssh -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") $USER@$HOST << 'EOF'
-          cd /var/www/your-repo
+          sudo su -
+          cd ~/app/
+          docker-compose down
           git pull origin main
-          npm install
-          npm run build
-          pm2 restart all
+          docker-compose up --build
         EOF
 
