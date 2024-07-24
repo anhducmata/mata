@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  flask_api:
+    build:
+      context: ./flask-api
+      dockerfile: Dockerfile
+    container_name: flask_api
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@pgvector_db:5432/vectordb
+    depends_on:
+      - pgvector_db
+
+  pgvector_db:
+    image: ankane/pgvector
+    container_name: pgvector_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: vectordb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  react_frontend:
+    build:
+      context: ./react-frontend
+      dockerfile: Dockerfile
+    container_name: react_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+
+volumes:
+  pgdata:
+
