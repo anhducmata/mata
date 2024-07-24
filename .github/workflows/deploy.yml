@@ -19,7 +19,7 @@ jobs:
         HOST: ${{ secrets.EC2_HOST }}
         USER: ${{ secrets.EC2_USER }}
       run: |
-        ssh -o StrictHostKeyChecking=no -i <(echo "$SSH_PRIVATE_KEY") $USER@$HOST << 'EOF'
+        ssh -i <(echo "$SSH_PRIVATE_KEY") $USER@$HOST << 'EOF'
           sudo su -
           cd ~/app/
           docker-compose down
