@@ -151,12 +151,6 @@ const App = () => {
             className="textarea"
             placeholder="Type your message..."
           />
-          <button
-            className="send-button"
-            onClick={handleSendMessage}
-          >
-            Send
-          </button>
         </div>
       </div>
       <div className="chat-history">

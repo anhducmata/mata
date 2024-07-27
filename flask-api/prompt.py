@@ -1,5 +1,5 @@
 def get_extraction_prompt(conversation):
-    return f"""Summarize the key points and important details from this conversation/memory. Include any notable events, decisions, or information that was shared. Provide a concise overview that captures the essence of the discussion
+    return f"""Create a concise summary of the following memory, highlighting the user's key interests, preferences, and important details. Focus on capturing the essential points that reflect the user's personality, likes, and significant information
         Conversation: 
         \"\"\"
         {conversation}

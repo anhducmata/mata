@@ -52,12 +52,12 @@ html, body {
 }
 
 .textarea {
-  width: calc(100% - 70px); /* Adjust width to leave space for the button */
+  width: calc(100%); /* Adjust width to leave space for the button */
   height: 100px;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ddd; /* Light border color */
-  border-radius: 5px;
+  border-radius: 15px;
   resize: none;
   box-sizing: border-box;
   background-color: #fafafa; /* Light background for the textarea */
