@@ -12,11 +12,11 @@ from prompt import (
 from chatgpt_client import call
 from vector_handler import get_top_k_similarities_as_string
 from utils import chunk_text
-from config import DB_CONN_STRING
+import os
 
 # Initialize the Flask app and configure it
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONN_STRING
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = SQLAlchemy(app)
 
 # Initialize the SentenceTransformer model
