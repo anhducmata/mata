@@ -87,7 +87,7 @@ const App = () => {
       typingSound.current.play(); // Play typing sound
 
       try {
-        const response = await fetch(`${baseUrl}/ask`, {
+        const response = await fetch(`${baseUrl}ask`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
