@@ -9,7 +9,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DATABASE_URL=postgresql://postgres:password@pgvector_db:5432/vectordb
+      - DATABASE_URL=postgresql://postgres:password@pgvector_db:5432/postgres
     depends_on:
       - pgvector_db
 
@@ -19,7 +19,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: vectordb
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
     volumes:
