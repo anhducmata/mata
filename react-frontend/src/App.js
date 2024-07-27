@@ -112,6 +112,25 @@ const App = () => {
     }
   };
 
+  const train = async () => {
+    typingSound.current.play(); // Play typing sound
+    try {
+      const response = await fetch(`http://ec2-54-251-4-248.ap-southeast-1.compute.amazonaws.com:5000/train`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: chatHistory })
+      });
+      await response.json();
+      receiveSound.current.play();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsWaitingForResponse(false);
+    }
+  };
+
   return (
     <div className="App">
       <div className={`textarea-container ${isRecording ? 'recording' : ''}`}>
@@ -148,6 +167,9 @@ const App = () => {
           </div>
         ))}
       </div>
+      <button className="send-all-button" onClick={train}>
+        Train
+      </button>
     </div>
   );
 };

@@ -75,6 +75,7 @@ def query_similar():
     top_n_indices_str = get_top_k_similarities_as_string(vectors, query_final_data)
     
     summarized = call(client, generate_reponse_final_prompt(top_n_indices_str, query_text))
+    session['default_session'] = summarized
     return jsonify({'results': summarized}), 200
 
 # Run the app

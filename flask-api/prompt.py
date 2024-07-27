@@ -1,17 +1,9 @@
 def get_extraction_prompt(conversation):
-    return f"""Please analyze the following conversation and provide a summary including key information for indexing. Identify the main topics, keywords, sentiment, emotions expressed, places mentioned, and people involved.
+    return f"""Summarize the key points and important details from this conversation/memory. Include any notable events, decisions, or information that was shared. Provide a concise overview that captures the essence of the discussion
         Conversation: 
         \"\"\"
         {conversation}
         \"\"\"
-
-        Summary:
-        - Main Topics:
-        - Keywords for Indexing:
-        - Sentiment:
-        - Emotions Expressed:
-        - Places Mentioned:
-        - People Involved:
         """
 
 def get_user_question_enrich_prompt(user_question, context):

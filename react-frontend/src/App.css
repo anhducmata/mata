@@ -130,3 +130,23 @@ html, body {
   color: #999;
   animation: fade-in-out 2s infinite;
 }
+
+.send-all-button {
+  display: block;
+  width: 100%;
+  max-width: 800px; /* Ensure it matches the width of chat history */
+  margin-top: 20px; /* Space above the button */
+  padding: 10px;
+  border: none;
+  background-color: #e67e22; /* Orange color */
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+.send-all-button:hover {
+  background-color: #d35400; /* Darker orange on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
