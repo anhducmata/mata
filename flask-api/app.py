@@ -27,6 +27,7 @@ CORS(app)
 # Initialize the SentenceTransformer model
 model = SentenceTransformer('all-MiniLM-L6-v2')
 api_key = os.getenv('CHATGPT_API_KEY')
+print(api_key)
 client = OpenAI(
     api_key=api_key
  )
