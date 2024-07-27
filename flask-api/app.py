@@ -21,12 +21,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 frontend_base_url = f"""{os.getenv('BASE_URL')}:3000"""
 db = SQLAlchemy(app)
 
-allowed_origins = [
-    "http://localhost:3000",
-    frontend_base_url
-]
-CORS(app, resources={r"/*": {"origins": allowed_origins}})
-
+CORS(app)
 
 # Initialize the SentenceTransformer model
 model = SentenceTransformer('all-MiniLM-L6-v2')
