@@ -87,12 +87,14 @@ const App = () => {
       typingSound.current.play(); // Play typing sound
 
       try {
+        // Add the new message to the chat history
+        const updatedChatHistory = [...chatHistory, inputText];
         const response = await fetch(`http://ec2-54-251-4-248.ap-southeast-1.compute.amazonaws.com:5000/ask`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ text: inputText })
+          body: JSON.stringify({ text: updatedChatHistory })
         });
         console.log(baseUrl);
         const data = await response.json();
