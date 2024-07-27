@@ -1,38 +1,117 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: center; /* Center content vertically */
+  height: 100vh; /* Full viewport height */
+  padding: 20px;
+  background-color: #f4f6f9; /* Light background color for a modern look */
+  box-sizing: border-box;
+}
+
+.textarea-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px; /* Increased max-width for a more spacious layout */
+  display: flex;
+  align-items: center;
+  background-color: #ffffff; /* White background for textarea area */
+  border-radius: 10px; /* Rounded corners for a modern touch */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 10px;
+  margin-bottom: 20px; /* Space between textarea and chat history */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.textarea-container.recording {
+  background-color: #fce4ec; /* Light pink background when recording */
+}
+
+.microphone-icon {
+  font-size: 24px; /* Adjust size of the emoji */
+  margin-right: 10px;
+  cursor: pointer;
+  color: #3498db; /* Blue color for the microphone */
+  transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+.microphone-icon.active {
+  color: #e74c3c; /* Red color when active (recording) */
+}
+
+.textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.textarea {
+  width: calc(100% - 70px); /* Adjust width to leave space for the button */
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd; /* Light border color */
+  border-radius: 5px;
+  resize: none;
+  box-sizing: border-box;
+  background-color: #fafafa; /* Light background for the textarea */
+}
+
+.send-button {
+  position: absolute;
+  right: 10px; /* Position the button inside the textarea */
+  bottom: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #3498db; /* Button color */
   color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
 }
 
-.App-link {
-  color: #61dafb;
+.send-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chat-history {
+  width: 100%;
+  max-width: 800px; /* Increased max-width for a more spacious layout */
+  height: calc(100vh - 150px); /* Adjust height to fill the remaining viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
+  background-color: #ffffff; /* White background for chat history */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid #ddd; /* Light border color */
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.chat-entry {
+  margin-bottom: 10px;
+}
+
+.user-message, .system-message {
+  padding: 8px;
+  border-radius: 8px;
+  max-width: 80%;
+  line-height: 1.4;
+}
+
+.user-message {
+  background-color: #e1f5fe; /* Light blue background for user messages */
+  align-self: flex-start; /* Align user messages to the left */
+}
+
+.system-message {
+  background-color: #f1f8e9; /* Light green background for system messages */
+  align-self: flex-end; /* Align system messages to the right */
+  color: #333; /* Dark text color for contrast */
 }
