@@ -87,7 +87,7 @@ const App = () => {
       typingSound.current.play(); // Play typing sound
 
       try {
-        const response = await fetch(`${baseUrl}ask`, {
+        const response = await fetch(`http://ec2-54-251-4-248.ap-southeast-1.compute.amazonaws.com:5000`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
