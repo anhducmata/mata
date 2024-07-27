@@ -115,3 +115,18 @@ html, body {
   align-self: flex-end; /* Align system messages to the right */
   color: #333; /* Dark text color for contrast */
 }
+
+@keyframes fade-in-out {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.typing-indicator {
+  display: inline-block;
+  color: #999;
+  animation: fade-in-out 2s infinite;
+}

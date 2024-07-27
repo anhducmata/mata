@@ -8,9 +8,12 @@ const App = () => {
   const [inputText, setInputText] = useState('');
   const [recognition, setRecognition] = useState(null);
   const [recognitionStarted, setRecognitionStarted] = useState(false);
+  const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
   const textareaRef = useRef(null); // To reference the textarea
   const pressSound = useRef(new Audio('./sounds/press.mp3')); // Path to press sound
   const releaseSound = useRef(new Audio('./sounds/release.mp3')); // Path to release sound
+  const typingSound = useRef(new Audio('./sounds/typing.mp3')); // Path to typing sound
+  const receiveSound = useRef(new Audio('./sounds/receive.mp3')); // Path to receive sound
 
   useEffect(() => {
     // Initialize Speech Recognition API
@@ -70,12 +73,36 @@ const App = () => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault(); // Prevent the default new line
-      if (inputText.trim()) {
-        setChatHistory([...chatHistory, { user: inputText, system: '...' }]); // Add chat history
-        setInputText(''); // Clear the textarea after sending
-        // Play sound on send
-        const sendSound = new Audio('./sounds/send.mp3');
-        sendSound.play();
+      handleSendMessage();
+    }
+  };
+
+  const handleSendMessage = async () => {
+    if (inputText.trim()) {
+      setChatHistory([...chatHistory, { user: inputText, system: 'typing...' }]); // Add chat history with typing placeholder
+      setIsWaitingForResponse(true);
+      setInputText(''); // Clear the textarea after sending
+      typingSound.current.play(); // Play typing sound
+
+      try {
+        const response = await fetch('http://ec2-54-251-4-248.ap-southeast-1.compute.amazonaws.com:5000/ask', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text: inputText })
+        });
+        const data = await response.json();
+        setChatHistory(chatHistory => {
+          const updatedHistory = [...chatHistory];
+          updatedHistory[updatedHistory.length - 1].system = data.reply; // Update the system message with API response
+          return updatedHistory;
+        });
+        receiveSound.current.play(); // Play receive sound
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsWaitingForResponse(false);
       }
     }
   };
@@ -98,18 +125,11 @@ const App = () => {
             onChange={(e) => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
             className="textarea"
+            placeholder="Type your message..."
           />
           <button
             className="send-button"
-            onClick={() => {
-              if (inputText.trim()) {
-                setChatHistory([...chatHistory, { user: inputText, system: '...' }]); // Add chat history
-                setInputText(''); // Clear the textarea after sending
-                // Play sound on send
-                const sendSound = new Audio('./sounds/send.mp3');
-                sendSound.play();
-              }
-            }}
+            onClick={handleSendMessage}
           >
             Send
           </button>
@@ -119,7 +139,7 @@ const App = () => {
         {chatHistory.map((entry, index) => (
           <div key={index} className="chat-entry">
             <div className="user-message">You: {entry.user}</div>
-            <div className="system-message">System: {entry.system}</div>
+            <div className="system-message">{isWaitingForResponse && index === chatHistory.length - 1 ? <div className="typing-indicator">...</div> : `System: ${entry.system}`}</div>
           </div>
         ))}
       </div>
