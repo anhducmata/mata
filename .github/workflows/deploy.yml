@@ -29,6 +29,5 @@ jobs:
             export BASE_URL=${{ secrets.EC2_HOST }}
             echo "CHATGPT_API_KEY: \$CHATGPT_API_KEY"
             echo "BASE_URL: \$BASE_URL"
-            cd /home/ec2-user/app
-            sudo docker-compose down && docker-compose up --build -d
+            sudo su -c 'cd /home/ec2-user/app && docker-compose down && docker-compose up --build -d'
           EOF
