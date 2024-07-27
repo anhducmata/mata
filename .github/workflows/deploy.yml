@@ -25,7 +25,5 @@ jobs:
       - name: Deploy Docker Compose
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/ec2-user/app
-            docker-compose down
-            docker-compose up --build -d
+            sudo su -c 'cd /home/ec2-user/app && docker-compose down && docker-compose up --build -d'
           EOF
