@@ -14,6 +14,7 @@ from vector_handler import get_top_k_similarities_as_string
 from utils import chunk_text
 import os
 from flask_cors import CORS
+from openai import OpenAI
 
 # Initialize the Flask app and configure it
 app = Flask(__name__)
@@ -25,6 +26,12 @@ CORS(app)
 
 # Initialize the SentenceTransformer model
 model = SentenceTransformer('all-MiniLM-L6-v2')
+api_key = os.getenv('CHATGPT_API_KEY')
+client = OpenAI(
+    api_key=api_key
+ )
+print("Key is " + api_key)
+ 
 
 # Define the DataVector model
 class DataVector(db.Model):
@@ -44,7 +51,7 @@ def insert_and_embed():
         return jsonify({'error': 'Bad request'}), 400
     
     text = request.json['text']
-    summarized = call(get_extraction_prompt(text))
+    summarized = call(client, get_extraction_prompt(text))
     segments = chunk_text(summarized, 5000, 40)
     segment_vectors = [model.encode(segment.strip()).tolist() for segment in segments]
     
@@ -63,12 +70,12 @@ def query_similar():
     
     context_prompt_response_data = call(get_summrized_context_prompt(session.get('default_session')))
     query_text = request.json['text']
-    query_final_data = call(get_user_question_enrich_prompt(query_text, context_prompt_response_data))
+    query_final_data = call(client, get_user_question_enrich_prompt(query_text, context_prompt_response_data))
     
     vectors = DataVector.query.all()
     top_n_indices_str = get_top_k_similarities_as_string(vectors, query_final_data)
     
-    summarized = call(generate_reponse_final_prompt(top_n_indices_str, query_text))
+    summarized = call(client, generate_reponse_final_prompt(top_n_indices_str, query_text))
     return jsonify({'results': summarized}), 200
 
 # Run the app
