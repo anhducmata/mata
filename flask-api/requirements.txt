@@ -4,3 +4,4 @@ psycopg2
 Flask-Session
 sentence_transformers
 openai
+flask-cors

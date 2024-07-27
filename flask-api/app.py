@@ -13,11 +13,20 @@ from chatgpt_client import call
 from vector_handler import get_top_k_similarities_as_string
 from utils import chunk_text
 import os
+from flask_cors import CORS
 
 # Initialize the Flask app and configure it
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+frontend_base_url = f"""{os.getenv('BASE_URL')}:3000"""
 db = SQLAlchemy(app)
+
+allowed_origins = [
+    "http://localhost:3000",
+    frontend_base_url
+]
+CORS(app, resources={r"/*": {"origins": allowed_origins}})
+
 
 # Initialize the SentenceTransformer model
 model = SentenceTransformer('all-MiniLM-L6-v2')
