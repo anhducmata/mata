@@ -30,8 +30,6 @@ api_key = os.getenv('CHATGPT_API_KEY')
 client = OpenAI(
     api_key=api_key
  )
-print("Key is " + api_key)
- 
 
 # Define the DataVector model
 class DataVector(db.Model):
@@ -68,7 +66,7 @@ def query_similar():
     if not request.json or 'text' not in request.json:
         return jsonify({'error': 'Bad request'}), 400
     
-    context_prompt_response_data = call(get_summrized_context_prompt(session.get('default_session')))
+    context_prompt_response_data = call(client, get_summrized_context_prompt(session.get('default_session')))
     query_text = request.json['text']
     query_final_data = call(client, get_user_question_enrich_prompt(query_text, context_prompt_response_data))
     
