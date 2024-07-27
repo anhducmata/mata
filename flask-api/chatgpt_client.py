@@ -1,10 +1,11 @@
 from openai import OpenAI
 import os
 
+api_key = os.getenv('CHATGPT_API_KEY')
+print(api_key)
 client = OpenAI(
-    api_key=os.getenv('CHATGPT_API_KEY')
-
-)
+    api_key=api_key
+ )
 
 def call(prompt, max_tokens=150, model='gpt-4o', custom_default_role_message='You are a highly skilled AI assistant.'):
     response = client.chat.completions.create(
