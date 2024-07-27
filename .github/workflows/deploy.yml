@@ -20,11 +20,14 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ec2-user@${{ vars.EC2_HOST }}:/home/ec2-user/app
 
       - name: Deploy Docker Compose
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            export CHATGPT_API_KEY=${{ secrets.CHATGPT_API_KEY }}
-            sudo su -c 'cd /home/ec2-user/app && docker-compose down && docker-compose up --build -d'
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ vars.EC2_HOST }} << EOF
+            export CHATGPT_API_KEY=${{ vars.CHATGPT_API_KEY }}
+            export BASE_URL=${{ vars.BASE_URL }}
+            echo CHATGPT_API_KEY=${{ vars.CHATGPT_API_KEY }}
+            cd /home/ec2-user/app
+            sudo su docker-compose down && docker-compose up --build -d
           EOF

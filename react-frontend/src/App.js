@@ -14,6 +14,8 @@ const App = () => {
   const releaseSound = useRef(new Audio('./sounds/release.mp3')); // Path to release sound
   const typingSound = useRef(new Audio('./sounds/typing.mp3')); // Path to typing sound
   const receiveSound = useRef(new Audio('./sounds/receive.mp3')); // Path to receive sound
+  const baseUrl = process.env.BACKEND_URL;
+
 
   useEffect(() => {
     // Initialize Speech Recognition API
@@ -85,7 +87,7 @@ const App = () => {
       typingSound.current.play(); // Play typing sound
 
       try {
-        const response = await fetch('http://ec2-54-251-4-248.ap-southeast-1.compute.amazonaws.com:5000/ask', {
+        const response = await fetch(`${baseUrl}/ask`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
