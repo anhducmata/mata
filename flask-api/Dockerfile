@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 
 # Install the required packages
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Copy the rest of the application code
 COPY . .
