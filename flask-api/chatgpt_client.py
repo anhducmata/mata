@@ -2,7 +2,7 @@ from openai import OpenAI
 import os
 
 api_key = os.getenv('CHATGPT_API_KEY')
-print(api_key)
+print("Key is " + api_key)
 client = OpenAI(
     api_key=api_key
  )
