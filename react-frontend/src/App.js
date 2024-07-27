@@ -94,10 +94,11 @@ const App = () => {
           },
           body: JSON.stringify({ text: inputText })
         });
+        console.log(baseUrl);
         const data = await response.json();
         setChatHistory(chatHistory => {
           const updatedHistory = [...chatHistory];
-          updatedHistory[updatedHistory.length - 1].system = data.reply; // Update the system message with API response
+          updatedHistory[updatedHistory.length - 1].system = data.results; // Update the system message with API response
           return updatedHistory;
         });
         receiveSound.current.play(); // Play receive sound
