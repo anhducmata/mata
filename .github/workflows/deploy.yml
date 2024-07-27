@@ -25,9 +25,5 @@ jobs:
       - name: Deploy Docker Compose
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << EOF
-            export CHATGPT_API_KEY=${{ secrets.CHATGPT_API_KEY }}
-            export BASE_URL=${{ secrets.EC2_HOST }}
-            echo "CHATGPT_API_KEY: \$CHATGPT_API_KEY"
-            echo "BASE_URL: \$BASE_URL"
-            sudo su -c 'cd /home/ec2-user/app && docker-compose down && docker-compose up --build -d'
+            sudo su -c 'cd /home/ec2-user/app && export CHATGPT_API_KEY=${{ secrets.CHATGPT_API_KEY }} && export BASE_URL=${{ secrets.EC2_HOST }} && docker-compose down && docker-compose up --build -d'
           EOF
